@@ -16,10 +16,6 @@ dependencies {
     implementation("org.jetbrains.compose.material3:material3:1.2.1")
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "18"
-}
-
 compose.desktop {
     application {
         mainClass = "MainKt"
@@ -29,12 +25,12 @@ compose.desktop {
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
             )
             packageVersion = "1.0.0"
-            packageName = "theming"
+            packageName = "m3-components"
 
-            val iconsRoot = project.file("color-picker-desktop/src/main/resources")
+            val iconsRoot = project.file("src/main/resources")
 
             macOS {
-               iconFile.set(iconsRoot.resolve("icon.icns"))
+               iconFile.set(iconsRoot.resolve("app_icon.icns"))
             }
         }
     }
