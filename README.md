@@ -7,7 +7,15 @@ Desktop Playground to check how changing the color system can affect the differe
 
 You can visit the release pages to download the .dmg file for Mac and install it locally.
 
-If you want to check out the code, you can clone the project with `git clone git@github.com:oas004/Material3Playground.git`. Make sure that you are running a JDK version higher than 15. You can run the application either by running `./gradlew run` or pressing the play gutter icon button in the `Main.kt` file.
+If you want to check out the code, you can clone the project with 
+```
+git clone git@github.com:oas004/Material3Playground.git
+```
+Make sure that you are running a JDK version higher than 15. You can run the application either by running 
+```
+./gradlew run
+```
+or pressing the play gutter icon button in the `Main.kt` file.
 
 ## Gameplay 🔥
 
