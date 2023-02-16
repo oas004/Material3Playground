@@ -1,6 +1,47 @@
-# Material3Playground
-Playground to check how changing the color system can affect the different components in Material 3. Mainly used to learn and to get an overview of the Material 3 design components
+[![Build & test](https://github.com/oas004/Material3Playground/actions/workflows/verification.yml/badge.svg?branch=main)](https://github.com/oas004/Material3Playground/actions/workflows/verification.yml)
 
+# Material3Playground
+Desktop Playground to check how changing the color system can affect the different components in Material 3. Mainly used to learn and to get an overview of the Material 3 design components.
+
+## Setup 🔧
+
+You can visit the release pages to download the .dmg file for Mac and install it locally.
+
+If you want to check out the code, you can clone the project with `git clone git@github.com:oas004/Material3Playground.git`. Make sure that you are running a JDK version higher than 15. You can run the application either by running `./gradlew run` or pressing the play gutter icon button in the `Main.kt` file.
+
+## Gameplay 🔥
+
+### UI Mode
+
+You can toggle the UI Mode in the window menu bar at the top left. This will update all the colors to the dark/light theme.
+
+| Light Mode                                                |                        Dark Mode                        | 
+|-----------------------------------------------------------|:-------------------------------------------------------:|
+| ![main display light](.github/screenshots/main-light.png) | ![main display dark](.github/screenshots/main-dark.png) |
+
+You can interact with the components as you would on a mobile application. However, note that this is build with compose for desktop and there will be some differences on mobile.
+
+### Interaction 🌻
+You can interact with the colors on the right side. If you press a color, you can change the hexcode for this color. Pressing the "OK" button will update the components with the new color.
+
+![Change color first time](.github/screenshots/change-color.png)
+
+For instance changing the primary color to pink will update the main display with pink as primary color like this:
+
+
+![Change color updated main display](.github/screenshots/change-color-updated-main-page.png)
+
+The second time you change this color, the pink color will be remembered as a recently used color.
+
+
+![Change color second time](.github/screenshots/change-color-pink.png)
+
+## Upcoming features 👷
+ - We are planing to be able to export the colors to a simple format.
+ - We are still missing some key components from Material 3. We are planing on adding them. If there are someone that you miss, please file an issue or even better; make a PR on it.
+
+## Contribution ❄️ ⚡
+Pull requests are welcome! We'd love help improving this library. Feel free to browse through open issues to look for things that need work. If you have a feature request or bug, please open a new issue so we can track it.
 
 ## License
 MIT License
