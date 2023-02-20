@@ -192,5 +192,5 @@ private fun getColorFromText(hexCode: String): Color? {
     }
 }
 
-private val Color.hexCode: String
+internal val Color.hexCode: String
     get() = String.format("#%08X", toArgb())

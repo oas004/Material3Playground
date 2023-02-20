@@ -50,7 +50,8 @@ enum class Page {
 
 @Composable
 internal fun ComponentScope(
-    onColorPicked: (name: String, color: Color) -> Unit
+    onColorPicked: (name: String, color: Color) -> Unit,
+    onPrintColors: () -> Unit,
 ) {
     var selectedPage by remember { mutableStateOf(Page.Buttons) }
 
@@ -61,6 +62,11 @@ internal fun ComponentScope(
     ) {
         NavigationRail(
             modifier = Modifier.fillMaxHeight().padding(4.dp),
+            header = {
+                FloatingActionButton(onClick = onPrintColors) {
+                    Icon(imageVector = Icons.Default.CallToAction, contentDescription = "Save Current Colors to File")
+                }
+            }
         ) {
 
             NavigationRailItem(
