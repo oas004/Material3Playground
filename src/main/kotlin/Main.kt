@@ -77,8 +77,7 @@ fun main() = application {
 
                 ComponentScope(
                     onColorPicked = { colorName, color ->
-                        val updatedColorPalette =
-                            updateColorPalette(
+                        val updatedColorPalette = updateColorPalette(
                                 currentColorPalette = currentColorPalette,
                                 colorName = colorName,
                                 color = color,
@@ -86,7 +85,9 @@ fun main() = application {
 
                         if (darkmode) {
                             darkColorScheme = updatedColorPalette
-                        } else lightColorScheme = updatedColorPalette
+                        } else {
+                            lightColorScheme = updatedColorPalette
+                        }
                     }
                 )
             }
