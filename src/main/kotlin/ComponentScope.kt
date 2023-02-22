@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AppShortcut
+import androidx.compose.material.icons.filled.CallToAction
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.Download
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.filled.SpatialAudio
 import androidx.compose.material.icons.filled.SwitchLeft
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.TouchApp
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
