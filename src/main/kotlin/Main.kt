@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -141,7 +142,7 @@ internal fun Material3Playground(darkmode: Boolean) {
             if (fileSaverDialog != null) {
                 AlertDialog(
                     modifier = Modifier.defaultMinSize(minWidth = 400.dp, minHeight = 150.dp)
-                        .background(color = MaterialTheme.colorScheme.surface),
+                        .background(color = MaterialTheme.colorScheme.surface).testTag(TestTags.FileSaverDialog.dialog),
                     shape = RoundedCornerShape(8.dp),
                     title = {
                         Text(

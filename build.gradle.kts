@@ -14,6 +14,10 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.3.0")
     implementation("org.jetbrains.compose.material3:material3:1.2.1")
+
+    testImplementation("junit:junit:4.4")
+    testImplementation("org.jetbrains.compose.ui:ui-test-desktop:1.2.1")
+    testImplementation("org.jetbrains.compose.ui:ui-test-junit4:1.2.1")
 }
 
 compose.desktop {
