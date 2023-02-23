@@ -20,6 +20,12 @@ dependencies {
     testImplementation("org.jetbrains.compose.ui:ui-test-junit4:1.2.1")
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(15))
+    }
+}
+
 compose.desktop {
     application {
         mainClass = "MainKt"
