@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AppShortcut
+import androidx.compose.material.icons.filled.CallToAction
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.Download
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.filled.SpatialAudio
 import androidx.compose.material.icons.filled.SwitchLeft
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.TouchApp
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
@@ -29,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import components.M3Cards
@@ -49,8 +52,9 @@ enum class Page {
 }
 
 @Composable
-internal fun ComponentScope(
-    onColorPicked: (name: String, color: Color) -> Unit
+fun ComponentScope(
+    onColorPicked: (name: String, color: Color) -> Unit,
+    onPrintColors: () -> Unit,
 ) {
     var selectedPage by remember { mutableStateOf(Page.Buttons) }
 
@@ -60,10 +64,16 @@ internal fun ComponentScope(
             .background(color = MaterialTheme.colorScheme.background)
     ) {
         NavigationRail(
-            modifier = Modifier.fillMaxHeight().padding(4.dp),
+            modifier = Modifier.fillMaxHeight().padding(4.dp).testTag(TestTags.Components.navRail),
+            header = {
+                FloatingActionButton(onClick = onPrintColors) {
+                    Icon(imageVector = Icons.Default.CallToAction, contentDescription = "Save Current Colors to File")
+                }
+            }
         ) {
 
             NavigationRailItem(
+                modifier = Modifier.testTag(TestTags.NavRailButtons.buttons),
                 selected = selectedPage == Page.Buttons,
                 onClick = {
                     selectedPage = Page.Buttons
@@ -80,6 +90,7 @@ internal fun ComponentScope(
             )
 
             NavigationRailItem(
+                modifier = Modifier.testTag(TestTags.NavRailButtons.appBars),
                 selected = selectedPage == Page.AppBars,
                 onClick = {
                     selectedPage = Page.AppBars
@@ -96,6 +107,7 @@ internal fun ComponentScope(
             )
 
             NavigationRailItem(
+                modifier = Modifier.testTag(TestTags.NavRailButtons.cards),
                 selected = selectedPage == Page.Cards,
                 onClick = {
                     selectedPage = Page.Cards
@@ -112,6 +124,7 @@ internal fun ComponentScope(
             )
 
             NavigationRailItem(
+                modifier = Modifier.testTag(TestTags.NavRailButtons.textFields),
                 selected = selectedPage == Page.TextFields,
                 onClick = {
                     selectedPage = Page.TextFields
@@ -128,6 +141,7 @@ internal fun ComponentScope(
             )
 
             NavigationRailItem(
+                modifier = Modifier.testTag(TestTags.NavRailButtons.chips),
                 selected = selectedPage == Page.Chips,
                 onClick = {
                     selectedPage = Page.Chips
@@ -143,6 +157,7 @@ internal fun ComponentScope(
                 }
             )
             NavigationRailItem(
+                modifier = Modifier.testTag(TestTags.NavRailButtons.switch),
                 selected = selectedPage == Page.Switch,
                 onClick = {
                     selectedPage = Page.Switch
@@ -158,6 +173,7 @@ internal fun ComponentScope(
                 }
             )
             NavigationRailItem(
+                modifier = Modifier.testTag(TestTags.NavRailButtons.checkBox),
                 selected = selectedPage == Page.Checkbox,
                 onClick = {
                     selectedPage = Page.Checkbox
@@ -173,6 +189,7 @@ internal fun ComponentScope(
                 }
             )
             NavigationRailItem(
+                modifier = Modifier.testTag(TestTags.NavRailButtons.sliders),
                 selected = selectedPage == Page.Sliders,
                 onClick = {
                     selectedPage = Page.Sliders
@@ -189,6 +206,7 @@ internal fun ComponentScope(
             )
 
             NavigationRailItem(
+                modifier = Modifier.testTag(TestTags.NavRailButtons.progressBar),
                 selected = selectedPage == Page.ProgressBars,
                 onClick = {
                     selectedPage = Page.ProgressBars
@@ -206,6 +224,7 @@ internal fun ComponentScope(
             )
 
             NavigationRailItem(
+                modifier = Modifier.testTag(TestTags.NavRailButtons.dividers),
                 selected = selectedPage == Page.Dividers,
                 onClick = {
                     selectedPage = Page.Dividers

@@ -1,10 +1,20 @@
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -12,9 +22,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.*
+import androidx.compose.ui.window.MenuBar
+import androidx.compose.ui.window.Tray
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPosition
+import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import java.awt.Dimension
 
 private const val windowMinWidth = 500
@@ -61,33 +78,105 @@ fun main() = application {
         window.minimumSize = Dimension(windowMinWidth, windowMinHeight)
 
 
-        var lightColorScheme by remember { mutableStateOf(lightColorScheme()) }
-        var darkColorScheme by remember { mutableStateOf(darkColorScheme()) }
+        Material3Playground(darkmode = darkmode)
+    }
+}
 
-        MaterialTheme(
-            colorScheme = if (darkmode) darkColorScheme else lightColorScheme
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+internal fun Material3Playground(darkmode: Boolean) {
+    var lightColorScheme by remember { mutableStateOf(lightColorScheme()) }
+    var darkColorScheme by remember { mutableStateOf(darkColorScheme()) }
+
+    MaterialTheme(
+        colorScheme = if (darkmode) darkColorScheme else lightColorScheme
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = MaterialTheme.colorScheme.surface)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.surface)
-            ) {
 
-                val currentColorPalette = MaterialTheme.colorScheme
+            val currentColorPalette = MaterialTheme.colorScheme
+            var shouldShowFileChooser by remember { mutableStateOf(false) }
+            var fileSaverDialog: String? by remember { mutableStateOf(null) }
 
-                ComponentScope(
-                    onColorPicked = { colorName, color ->
-                        val updatedColorPalette = updateColorPalette(
-                                currentColorPalette = currentColorPalette,
-                                colorName = colorName,
-                                color = color,
+            ComponentScope(
+                onColorPicked = { colorName, color ->
+                    val updatedColorPalette = updateColorPalette(
+                        currentColorPalette = currentColorPalette,
+                        colorName = colorName,
+                        color = color,
+                    )
+
+                    if (darkmode) {
+                        darkColorScheme = updatedColorPalette
+                    } else {
+                        lightColorScheme = updatedColorPalette
+                    }
+                },
+                onPrintColors = {
+                    shouldShowFileChooser = true
+                }
+            )
+
+            if (shouldShowFileChooser) {
+                FileChooserDialog(
+                    title = "Select directory to save file",
+                    onResult = {
+                        saveColorsToFile(
+                            currentColorPalette, file = it, onResult = { success, message ->
+                                // Implement success / failure screens for this when VM is implemented,
+                                // and we can easier manage states.
+                                fileSaverDialog = message
+                            }
+                        )
+                        shouldShowFileChooser = false
+                    },
+                    onCancel = {
+                        shouldShowFileChooser = false
+                    }
+                )
+            }
+
+            if (fileSaverDialog != null) {
+                AlertDialog(
+                    modifier = Modifier.defaultMinSize(minWidth = 400.dp, minHeight = 150.dp)
+                        .background(color = MaterialTheme.colorScheme.surface).testTag(TestTags.FileSaverDialog.dialog),
+                    shape = RoundedCornerShape(8.dp),
+                    title = {
+                        Text(
+                            modifier = Modifier.fillMaxWidth().padding(12.dp),
+                            text = "Saving Colors to Colors.kt",
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                    },
+                    buttons = {
+                        Button(
+                            modifier = Modifier.align(Alignment.CenterVertically),
+                            onClick = {
+                                fileSaverDialog = null
+                            }
+                        ) {
+                            Text(
+                                text = "OK",
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
-
-                        if (darkmode) {
-                            darkColorScheme = updatedColorPalette
-                        } else {
-                            lightColorScheme = updatedColorPalette
                         }
+                    },
+                    onDismissRequest = {
+                        fileSaverDialog = null
+                    },
+                    text = {
+                        Text(
+                            modifier = Modifier.fillMaxWidth().padding(12.dp),
+                            text = fileSaverDialog ?: "",
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
                     }
                 )
             }
