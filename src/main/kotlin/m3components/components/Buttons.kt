@@ -1,5 +1,6 @@
 package m3components.components
 
+import TestTags
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.LazyGridScope
@@ -24,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 
@@ -32,7 +34,7 @@ fun LazyGridScope.m3Buttons() {
 
     item {
         Button(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(8.dp).testTag(TestTags.Buttons.regular),
             onClick = {},
             enabled = true
         ) {
@@ -42,7 +44,7 @@ fun LazyGridScope.m3Buttons() {
 
     item {
         OutlinedButton(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(8.dp).testTag(TestTags.Buttons.outlined),
             onClick = {},
             enabled = true
         ) {
@@ -52,7 +54,7 @@ fun LazyGridScope.m3Buttons() {
 
     item {
         TextButton(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(8.dp).testTag(TestTags.Buttons.text),
             onClick = {},
             enabled = true
         ) {
@@ -63,7 +65,7 @@ fun LazyGridScope.m3Buttons() {
     item {
         Box {
             FloatingActionButton(
-                modifier = Modifier.align(Alignment.Center).padding(8.dp),
+                modifier = Modifier.align(Alignment.Center).padding(8.dp).testTag(TestTags.Buttons.floating),
                 onClick = {}) {
                 Text("FAB")
             }
@@ -73,7 +75,7 @@ fun LazyGridScope.m3Buttons() {
     item {
         Box {
             ExtendedFloatingActionButton(
-                modifier = Modifier
+                modifier = Modifier.testTag(TestTags.Buttons.extendedFloating)
                     .align(Alignment.Center)
                     .padding(8.dp),
                 onClick = {}
@@ -85,7 +87,7 @@ fun LazyGridScope.m3Buttons() {
 
     item {
         IconButton(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(8.dp).testTag(TestTags.Buttons.icon),
             onClick = {}, enabled = true
         ) {
             Icon(imageVector = Icons.Default.CardTravel, contentDescription = null)
@@ -95,7 +97,7 @@ fun LazyGridScope.m3Buttons() {
     item {
         var checked by remember { mutableStateOf(false) }
         IconToggleButton(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(8.dp).testTag(TestTags.Buttons.iconToggle),
             checked = checked, onCheckedChange = { checked = it }
         ) {
             if (checked) {
@@ -109,7 +111,7 @@ fun LazyGridScope.m3Buttons() {
     item {
         Box {
             FilledIconButton(
-                modifier = Modifier.align(Alignment.Center).padding(8.dp),
+                modifier = Modifier.align(Alignment.Center).padding(8.dp).testTag(TestTags.Buttons.filledIcon),
                 onClick = {}, enabled = true
             ) {
                 Icon(imageVector = Icons.Default.CardTravel, contentDescription = null)
