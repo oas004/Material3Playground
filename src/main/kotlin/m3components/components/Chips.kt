@@ -3,7 +3,9 @@ package components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
@@ -17,19 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun M3Chips() {
-    Column {
-        Spacer(Modifier.size(16.dp))
-
-        M3OnSurfaceText(
-            text = "Chips",
-            style = MaterialTheme.typography.headlineSmall
-        )
-
-        Spacer(Modifier.size(16.dp))
-
-        Row {
+fun LazyGridScope.m3Chips() {
+    item {
+        Row(Modifier.padding(8.dp)) {
             var selectedId by remember { mutableStateOf(1) }
 
             FilterChip(
@@ -56,4 +48,3 @@ fun M3Chips() {
         }
     }
 }
-
