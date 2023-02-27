@@ -1,11 +1,9 @@
 package components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -18,19 +16,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 
-@Composable
-fun M3TextFields() {
-    Column {
-        Spacer(Modifier.size(16.dp))
+fun LazyGridScope.m3TextFields() {
 
-        M3OnSurfaceText(
-            text = "Text Fields",
-            style = MaterialTheme.typography.headlineSmall
+    item {
+
+        val text = remember {
+            mutableStateOf("")
+        }
+
+        OutlinedTextField(
+            modifier = Modifier.padding(8.dp),
+            value = text.value,
+            onValueChange = {
+                text.value = it
+            },
+            placeholder = {
+                Text("Please type a text")
+            }
         )
+    }
 
-        Spacer(Modifier.size(16.dp))
+    item {
 
-        Row {
+        Column(
+            modifier = Modifier.padding(8.dp),
+        ) {
             val text = remember {
                 mutableStateOf("")
             }
@@ -42,28 +52,10 @@ fun M3TextFields() {
                 },
                 placeholder = {
                     Text("Please type a text")
-                }
+                },
+                isError = true,
             )
-
-            Spacer(Modifier.size(16.dp))
-
-            Column {
-                val text = remember {
-                    mutableStateOf("")
-                }
-
-                OutlinedTextField(
-                    value = text.value,
-                    onValueChange = {
-                        text.value = it
-                    },
-                    placeholder = {
-                        Text("Please type a text")
-                    },
-                    isError = true,
-                )
-                TextFieldErrorMessage(message = "Something went wrong")
-            }
+            TextFieldErrorMessage(message = "Something went wrong")
         }
     }
 }

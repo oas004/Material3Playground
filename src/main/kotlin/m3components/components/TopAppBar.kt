@@ -1,13 +1,12 @@
 package components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -18,51 +17,41 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun M3TopAppBars() {
-    Column {
-        Spacer(Modifier.size(16.dp))
-
-        M3OnSurfaceText(
-            text = "Top app bars",
-            style = MaterialTheme.typography.headlineSmall
-        )
-
-        Spacer(Modifier.size(16.dp))
-        M3OnSurfaceText(
-            text = "Not Scrolled State",
-            style = MaterialTheme.typography.labelLarge
-        )
-        Spacer(Modifier.size(4.dp))
+fun LazyGridScope.m3TopAppBars() {
+    item {
         SmallTopAppBar(
+            modifier = Modifier.width(600.dp).padding(8.dp),
             navigationIcon = { NavigationIcon() },
             title = { Text("Small top app bar") },
         )
-        Spacer(modifier = Modifier.size(16.dp))
+    }
+    item {
         CenterAlignedTopAppBar(
+            modifier = Modifier.width(600.dp).padding(8.dp),
             navigationIcon = { NavigationIcon() },
             title = { Text("Center aligned top app bar") },
         )
+    }
+    item {
 
-        Spacer(modifier = Modifier.size(16.dp))
-
-        M3OnSurfaceText(
-            text = "Scrolled State",
-            style = MaterialTheme.typography.labelLarge,
-        )
-        Spacer(Modifier.size(4.dp))
         // Hacky scroll state to show how the toolbar will look if its scrolled state
         val scrollState = TopAppBarScrollState(-1f, 0f, -2f)
 
         SmallTopAppBar(
+            modifier = Modifier.width(600.dp).padding(8.dp),
             navigationIcon = { NavigationIcon() },
             title = { Text("Small top app bar") },
             scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(scrollState)
         )
+    }
 
-        Spacer(modifier = Modifier.size(16.dp))
+    item {
+
+        // Hacky scroll state to show how the toolbar will look if its scrolled state
+        val scrollState = TopAppBarScrollState(-1f, 0f, -2f)
 
         CenterAlignedTopAppBar(
+            modifier = Modifier.width(600.dp).padding(8.dp),
             navigationIcon = { NavigationIcon() },
             title = { Text("Center aligned top app bar") },
             scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(scrollState)

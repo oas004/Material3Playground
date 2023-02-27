@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -34,18 +35,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import components.M3Cards
-import components.M3Checkbox
-import components.M3Chips
-import components.M3Divider
-import components.M3NavigationBars
-import components.M3ProgressBar
-import components.M3Slider
-import components.M3Switch
-import components.M3Tab
-import components.M3TextFields
-import components.M3TopAppBars
-import m3components.components.M3Buttons
+import components.m3Cards
+import components.m3Checkbox
+import components.m3Chips
+import components.m3Divider
+import components.m3NavigationBars
+import components.m3ProgressBar
+import components.m3Slider
+import components.m3Switch
+import components.m3Tab
+import components.m3TextFields
+import components.m3TopAppBars
+import m3components.components.m3Buttons
 
 enum class Page {
     Buttons, AppBars, Cards, TextFields, Chips, Switch, Checkbox, Sliders, ProgressBars, Dividers
@@ -263,50 +264,50 @@ fun ComponentScope(
 private fun M3Components(modifier: Modifier, page: Page) {
     LazyVerticalGrid(
         modifier = modifier,
-        columns = GridCells.Fixed(1),
+        columns = GridCells.Adaptive(300.dp),
         contentPadding = PaddingValues(20.dp)
     ) {
         when (page) {
             Page.Buttons -> {
-                item { M3Buttons() }
+                m3Buttons()
             }
 
             Page.AppBars -> {
-                item { M3TopAppBars() }
-                item { M3NavigationBars() }
-                item { M3Tab() }
+                m3TopAppBars()
+                m3NavigationBars()
+                m3Tab()
             }
 
             Page.Cards -> {
-                item { M3Cards() }
+                m3Cards()
             }
 
             Page.TextFields -> {
-                item { M3TextFields() }
+                m3TextFields()
             }
 
             Page.Chips -> {
-                item { M3Chips() }
+                m3Chips()
             }
 
             Page.Switch -> {
-                item { M3Switch() }
+                m3Switch()
             }
 
             Page.Checkbox -> {
-                item { M3Checkbox() }
+                m3Checkbox()
             }
 
             Page.Sliders -> {
-                item { M3Slider() }
+                m3Slider()
             }
 
             Page.ProgressBars -> {
-                item { M3ProgressBar() }
+                m3ProgressBar()
             }
 
             Page.Dividers -> {
-                item { M3Divider() }
+                m3Divider()
             }
         }
     }
