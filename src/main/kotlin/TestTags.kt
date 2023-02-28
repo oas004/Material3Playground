@@ -24,6 +24,10 @@ object TestTags {
         const val filled = "FilledCard"
     }
 
+    object CheckBox {
+        const val regular = "Regular"
+    }
+
     object NavRailButtons {
         const val buttons = "Buttons"
         const val appBars = "AppBars"
