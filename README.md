@@ -45,7 +45,6 @@ The second time you change this color, the pink color will be remembered as a re
 ![Change color second time](.github/screenshots/change-color-pink.png)
 
 ## Upcoming features 👷
- - We are planing to be able to export the colors to a simple format.
  - We are still missing some key components from Material 3. We are planing on adding them. If there are someone that you miss, please file an issue or even better; make a PR on it.
 
 ## Contribution ❄️ ⚡
