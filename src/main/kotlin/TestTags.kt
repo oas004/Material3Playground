@@ -18,6 +18,16 @@ object TestTags {
         const val iconToggle = "IconToggleButton"
     }
 
+    object Cards {
+        const val elevated = "ElevatedCard"
+        const val outlined = "OutlinedCard"
+        const val filled = "FilledCard"
+    }
+
+    object CheckBox {
+        const val regular = "Regular"
+    }
+
     object NavRailButtons {
         const val buttons = "Buttons"
         const val appBars = "AppBars"

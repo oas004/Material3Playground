@@ -1,5 +1,6 @@
 package components
 
+import TestTags
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
@@ -11,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -19,6 +21,7 @@ fun LazyGridScope.m3Checkbox() {
         var checked by remember { mutableStateOf(true) }
         Row {
             Checkbox(
+                modifier = Modifier.testTag(TestTags.CheckBox.regular),
                 checked = checked,
                 onCheckedChange = { checked = it }
             )
@@ -26,6 +29,7 @@ fun LazyGridScope.m3Checkbox() {
             Spacer(Modifier.size(8.dp))
 
             Checkbox(
+                modifier = Modifier.testTag(TestTags.CheckBox.regular),
                 checked = !checked,
                 onCheckedChange = { checked = !it }
             )
