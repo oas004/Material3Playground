@@ -16,7 +16,7 @@ dependencies {
     implementation("org.jetbrains.compose.material3:material3:1.2.1")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.compose.ui:ui-test-desktop:1.2.1")
+    testImplementation("org.jetbrains.compose.ui:ui-test-desktop:1.3.1")
     testImplementation("org.jetbrains.compose.ui:ui-test-junit4:1.3.1")
 }
 
