@@ -34,7 +34,7 @@ compose.desktop {
             targetFormats(
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
             )
-            packageVersion = "1.1.0"
+            packageVersion = "1.2.0"
             packageName = "m3-components"
 
             val iconsRoot = project.file("src/main/resources")
