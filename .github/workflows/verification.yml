@@ -16,10 +16,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 15
-        uses: actions/setup-java@v1
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          java-version: 15
+          distribution: 'zulu'
+          java-version: 17
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Run unit tests
@@ -36,10 +37,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 15
-        uses: actions/setup-java@v1
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          java-version: 15
+          distribution: 'zulu'
+          java-version: 17
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Run unit tests
