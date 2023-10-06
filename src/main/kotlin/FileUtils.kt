@@ -1,3 +1,5 @@
+import ColorFileType.Kotlin
+import ColorFileType.XML
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -35,19 +37,63 @@ internal fun FileChooserDialog(
 internal fun saveColorsToFile(
     currentColorPalette: ColorScheme,
     file: File,
+    fileType: ColorFileType,
     onResult: (success: Boolean, message: String) -> Unit
 ) {
-    try {
+    when (fileType) {
+        Kotlin -> saveColorsToKotlinFile(file = file, currentColorPalette = currentColorPalette, onResult = onResult)
+        XML -> saveColorsToXMLFile(file = file, currentColorPalette = currentColorPalette, onResult = onResult)
+    }
+}
+
+private fun saveColorsToXMLFile(
+    file: File,
+    currentColorPalette: ColorScheme,
+    onResult: (success: Boolean, message: String) -> Unit
+) {
+    tryWriteToFile(
+        onResult = onResult
+    ) {
+        val path = file.path
+        val outputFile = Path(path, "colors.xml").createFile().toFile()
+        outputFile.apply {
+
+            getColorList(colorPalette = currentColorPalette).forEach { color ->
+                appendText(getColorsXMLProperty(colorNameLowerCase = color.key, color = color.value))
+            }
+
+        }
+        onResult(true, "Saving colors worked")
+    }
+}
+
+
+private fun saveColorsToKotlinFile(
+    file: File,
+    currentColorPalette: ColorScheme,
+    onResult: (success: Boolean, message: String) -> Unit
+) {
+    tryWriteToFile(
+        onResult = onResult
+    ) {
         val path = file.path
         val outputFile = Path(path, "colors.kt").createFile().toFile()
         outputFile.apply {
 
             getColorList(colorPalette = currentColorPalette).forEach { color ->
-                appendText(getColorName(colorNameLowerCase = color.key, color = color.value))
+                appendText(getColorKotlinProperty(colorNameLowerCase = color.key, color = color.value))
             }
 
         }
         onResult(true, "Saving colors worked")
+    }
+}
+private fun tryWriteToFile(
+    onResult: (success: Boolean, message: String) -> Unit,
+    block: () -> Unit,
+) {
+    try {
+        block.invoke()
     } catch (fileNotFound: FileNotFoundException) {
         onResult(false, "Could not save to this folder as it does not exist.")
     } catch (securityException: SecurityException) {
@@ -57,8 +103,12 @@ internal fun saveColorsToFile(
     }
 }
 
+internal fun getColorsXMLProperty(colorNameLowerCase: String, color: Color): String {
+    return "<color name=\"$colorNameLowerCase\">${color.hexCode}</color> \n"
+}
 
-internal fun getColorName(colorNameLowerCase: String, color: Color): String {
+
+internal fun getColorKotlinProperty(colorNameLowerCase: String, color: Color): String {
     val capitalizedColorName = colorNameLowerCase.replaceFirstChar {
         if (it.isLowerCase()) {
             it.titlecase(Locale.getDefault())
@@ -99,4 +149,8 @@ private fun getColorList(colorPalette: ColorScheme): Map<String, Color> {
         "onErrorContainer" to colorPalette.onErrorContainer,
         "outline" to colorPalette.outline,
     )
+}
+
+internal enum class ColorFileType {
+    Kotlin, XML
 }
