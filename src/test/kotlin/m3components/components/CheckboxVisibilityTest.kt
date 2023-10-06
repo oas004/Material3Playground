@@ -15,7 +15,7 @@ class CheckboxVisibilityTest {
     val rule = createComposeRule()
 
     @Test
-    fun testOutlinedCardIsPresent() {
+    fun testCheckboxIsPresent() {
         rule.apply {
             setContent {
                 Material3Playground(false)
