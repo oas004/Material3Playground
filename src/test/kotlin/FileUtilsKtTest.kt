@@ -8,7 +8,7 @@ class FileUtilsKtTest {
         val colorNameLowerCase = "red"
         val color = Color.Red
 
-        val result = getColorName(colorNameLowerCase, color)
+        val result = getColorKotlinProperty(colorNameLowerCase, color)
 
         // Assert
         val expected = "val Red: Color = Color(0xFFFF0000) \n"
