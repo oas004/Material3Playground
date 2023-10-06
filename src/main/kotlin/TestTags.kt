@@ -40,6 +40,10 @@ object TestTags {
         const val circular = "CircularProgressBar"
     }
 
+    object Slider {
+        const val regular = "Regular"
+    }
+
     object NavRailButtons {
         const val buttons = "Buttons"
         const val appBars = "AppBars"
