@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,6 +23,7 @@ fun LazyGridScope.m3Chips() {
             var selectedId by remember { mutableStateOf(1) }
 
             FilterChip(
+                modifier = Modifier.testTag(TestTags.Chips.regular),
                 label = { Text("Android") },
                 onClick = { selectedId = 1 },
                 selected = selectedId == 1
@@ -30,6 +32,7 @@ fun LazyGridScope.m3Chips() {
             Spacer(modifier = Modifier.size(4.dp))
 
             FilterChip(
+                modifier = Modifier.testTag(TestTags.Chips.regular),
                 label = { Text("Material") },
                 onClick = { selectedId = 2 },
                 selected = selectedId == 2
@@ -38,6 +41,7 @@ fun LazyGridScope.m3Chips() {
             Spacer(modifier = Modifier.size(4.dp))
 
             FilterChip(
+                modifier = Modifier.testTag(TestTags.Chips.regular),
                 label = { Text("Compose") },
                 onClick = { selectedId = 3 },
                 selected = selectedId == 3
