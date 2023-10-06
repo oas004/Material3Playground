@@ -44,6 +44,10 @@ object TestTags {
         const val regular = "Regular"
     }
 
+    object Switch {
+        const val regular = "Regular"
+    }
+
     object NavRailButtons {
         const val buttons = "Buttons"
         const val appBars = "AppBars"
