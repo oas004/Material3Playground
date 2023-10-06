@@ -48,6 +48,12 @@ object TestTags {
         const val regular = "Regular"
     }
 
+    object TextField {
+        const val regular = "RegularTextField"
+        const val error = "ErrorTextField"
+        const val errorLabel = "ErrorLabel"
+    }
+
     object NavRailButtons {
         const val buttons = "Buttons"
         const val appBars = "AppBars"
