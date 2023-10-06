@@ -32,6 +32,10 @@ object TestTags {
         const val regular = "Regular"
     }
 
+    object Divider {
+        const val regular = "Regular"
+    }
+
     object NavRailButtons {
         const val buttons = "Buttons"
         const val appBars = "AppBars"
