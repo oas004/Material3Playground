@@ -24,8 +24,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyShortcut
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -41,6 +44,7 @@ import java.awt.Dimension
 private const val windowMinWidth = 500
 private const val windowMinHeight = 600
 
+@OptIn(ExperimentalComposeUiApi::class)
 fun main() = application {
 
     Tray(
@@ -72,6 +76,7 @@ fun main() = application {
                 }
                 Item(
                     text = darkModeMenuText,
+                    shortcut = KeyShortcut(key = Key.D, meta = true),
                     onClick = {
                         darkmode = !darkmode
                     },
