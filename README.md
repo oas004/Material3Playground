@@ -5,9 +5,7 @@ Desktop Playground to check how changing the color system can affect the differe
 
 ## Setup 🔧
 
-You can visit the release pages to download the .dmg file for Mac and install it locally.
-
-If you want to check out the code, you can clone the project with 
+You want to check out the code, you can clone the project with 
 ```
 git clone git@github.com:oas004/Material3Playground.git
 ```
