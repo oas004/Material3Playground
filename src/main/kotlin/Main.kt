@@ -1,17 +1,21 @@
-
+import ColorFileType.Kotlin
+import ColorFileType.XML
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Text
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -20,8 +24,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyShortcut
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -37,6 +44,7 @@ import java.awt.Dimension
 private const val windowMinWidth = 500
 private const val windowMinHeight = 600
 
+@OptIn(ExperimentalComposeUiApi::class)
 fun main() = application {
 
     Tray(
@@ -68,6 +76,7 @@ fun main() = application {
                 }
                 Item(
                     text = darkModeMenuText,
+                    shortcut = KeyShortcut(key = Key.D, meta = true),
                     onClick = {
                         darkmode = !darkmode
                     },
@@ -100,6 +109,8 @@ internal fun Material3Playground(darkmode: Boolean) {
             val currentColorPalette = MaterialTheme.colorScheme
             var shouldShowFileChooser by remember { mutableStateOf(false) }
             var fileSaverDialog: String? by remember { mutableStateOf(null) }
+            var fileTypeDialog by remember { mutableStateOf(false) }
+            var savableFileType by remember { mutableStateOf(Kotlin) }
 
             ComponentScope(
                 onColorPicked = { colorName, color ->
@@ -116,7 +127,7 @@ internal fun Material3Playground(darkmode: Boolean) {
                     }
                 },
                 onPrintColors = {
-                    shouldShowFileChooser = true
+                    fileTypeDialog = true
                 }
             )
 
@@ -129,7 +140,8 @@ internal fun Material3Playground(darkmode: Boolean) {
                                 // Implement success / failure screens for this when VM is implemented,
                                 // and we can easier manage states.
                                 fileSaverDialog = message
-                            }
+                            },
+                            fileType = savableFileType
                         )
                         shouldShowFileChooser = false
                     },
@@ -140,6 +152,10 @@ internal fun Material3Playground(darkmode: Boolean) {
             }
 
             if (fileSaverDialog != null) {
+                val title = when (savableFileType) {
+                    Kotlin -> "Saving Colors to Colors.kt"
+                    XML -> "Saving Colors to Colors.xml"
+                }
                 AlertDialog(
                     modifier = Modifier.defaultMinSize(minWidth = 400.dp, minHeight = 150.dp)
                         .background(color = MaterialTheme.colorScheme.surface).testTag(TestTags.FileSaverDialog.dialog),
@@ -147,7 +163,7 @@ internal fun Material3Playground(darkmode: Boolean) {
                     title = {
                         Text(
                             modifier = Modifier.fillMaxWidth().padding(12.dp),
-                            text = "Saving Colors to Colors.kt",
+                            text = title,
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.headlineMedium
                         )
@@ -163,7 +179,7 @@ internal fun Material3Playground(darkmode: Boolean) {
                                 text = "OK",
                                 textAlign = TextAlign.Center,
                                 style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                                color = MaterialTheme.colorScheme.onPrimary
                             )
                         }
                     },
@@ -180,8 +196,82 @@ internal fun Material3Playground(darkmode: Boolean) {
                     }
                 )
             }
+
+            if (fileTypeDialog) {
+                ChooseFileTypeDialog(
+                    onTypeChosen = { type ->
+                        savableFileType = type
+                        shouldShowFileChooser = true
+                        fileTypeDialog = false
+                    },
+                    onDismiss = {
+                        fileTypeDialog = false
+                    }
+                )
+            }
+
         }
     }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun ChooseFileTypeDialog(onTypeChosen: (colorType: ColorFileType) -> Unit, onDismiss: () -> Unit) {
+    AlertDialog(
+        modifier = Modifier.defaultMinSize(minWidth = 400.dp, minHeight = 150.dp)
+            .background(color = MaterialTheme.colorScheme.surface).testTag(TestTags.FileSaverDialog.dialog),
+        shape = RoundedCornerShape(8.dp),
+        title = {
+            Text(
+                modifier = Modifier.fillMaxWidth().padding(12.dp),
+                text = "Do you want to save colors as XML or Kotlin?",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineMedium
+            )
+        },
+        buttons = {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                Button(
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    onClick = {
+                        onTypeChosen(Kotlin)
+                    }
+                ) {
+                    Text(
+                        text = "Kotlin",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+                Spacer(Modifier.size(20.dp))
+                Button(
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    onClick = {
+                        onTypeChosen(XML)
+                    }
+                ) {
+                    Text(
+                        text = "XML",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+        },
+        onDismissRequest = {
+            onDismiss.invoke()
+        },
+        text = {
+            Text(
+                modifier = Modifier.fillMaxWidth().padding(12.dp),
+                text = "Please choose a file type to save the color files as",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+    )
 }
 
 private fun updateColorPalette(

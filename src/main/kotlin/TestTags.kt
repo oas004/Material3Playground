@@ -28,6 +28,43 @@ object TestTags {
         const val regular = "Regular"
     }
 
+    object Chips {
+        const val regular = "Regular"
+    }
+
+    object Divider {
+        const val regular = "Regular"
+    }
+
+    object ProgressBar {
+        const val circular = "CircularProgressBar"
+    }
+
+    object Slider {
+        const val regular = "Regular"
+    }
+
+    object Switch {
+        const val regular = "Regular"
+    }
+
+    object TextField {
+        const val regular = "RegularTextField"
+        const val error = "ErrorTextField"
+        const val errorLabel = "ErrorLabel"
+    }
+
+    object TopAppBar {
+        const val small = "SmallTopAppBar"
+        const val navigationIconSmall = "NavigationIconSmallTopAppBar"
+        const val centerAligned = "CenterAlignedTopAppBar"
+        const val navigationIconCenterAligned = "NavigationIconCenterAlignedTopAppBar"
+        const val smallScroll = "SmallScrollTopAppBar"
+        const val navigationIconsmallScroll = "NavigationIconSmallScrollTopAppBar"
+        const val centerAlignedScroll = "CenterAlignedScrollTopAppBar"
+        const val navigationIconCenterAlignedScroll = "NavigationIconCenterAlignedScrollTopAppBar"
+    }
+
     object NavRailButtons {
         const val buttons = "Buttons"
         const val appBars = "AppBars"

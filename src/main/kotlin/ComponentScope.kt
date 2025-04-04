@@ -324,7 +324,11 @@ private fun ColorPickers(
     val colorPickedCallback: (colorName: String, pickedColor: Color) -> Unit =
         { colorName, pickedColor ->
             onColorPicked(colorName, pickedColor)
-            recentlyUsedColors = recentlyUsedColors.toMutableList().also { it.add(pickedColor) }
+            recentlyUsedColors = recentlyUsedColors.toMutableList().also {
+                if (!it.contains(pickedColor)) {
+                    it.add(pickedColor)
+                }
+            }
         }
 
     LazyVerticalGrid(

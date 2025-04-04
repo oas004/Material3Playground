@@ -1,5 +1,6 @@
 package components
 
+import TestTags
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 fun LazyGridScope.m3TextFields() {
@@ -25,7 +27,7 @@ fun LazyGridScope.m3TextFields() {
         }
 
         OutlinedTextField(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(8.dp).testTag(TestTags.TextField.regular),
             value = text.value,
             onValueChange = {
                 text.value = it
@@ -46,6 +48,7 @@ fun LazyGridScope.m3TextFields() {
             }
 
             OutlinedTextField(
+                modifier = Modifier.testTag(TestTags.TextField.error),
                 value = text.value,
                 onValueChange = {
                     text.value = it
@@ -55,14 +58,17 @@ fun LazyGridScope.m3TextFields() {
                 },
                 isError = true,
             )
-            TextFieldErrorMessage(message = "Something went wrong")
+            TextFieldErrorMessage(
+                modifier = Modifier.testTag(TestTags.TextField.errorLabel),
+                message = "Something went wrong"
+            )
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TextFieldErrorMessage(message: String) {
+private fun TextFieldErrorMessage(modifier: Modifier = Modifier, message: String) {
     // This will ensure that the error message will be aligned with the input text. Since we do
     // not have a built-in label supported for our text fields, using textFieldWithoutLabelPadding
     // is just fine here.
@@ -70,7 +76,7 @@ private fun TextFieldErrorMessage(message: String) {
         .calculateStartPadding(layoutDirection = LocalLayoutDirection.current)
 
     Text(
-        modifier = Modifier
+        modifier = modifier
             .padding(
                 top = 4.dp,
                 start = startPadding
