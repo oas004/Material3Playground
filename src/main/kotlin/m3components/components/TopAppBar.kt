@@ -4,14 +4,7 @@ import TestTags
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.LazyGridScope
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.SmallTopAppBar
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollState
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -21,7 +14,7 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 fun LazyGridScope.m3TopAppBars() {
     item {
-        SmallTopAppBar(
+        CenterAlignedTopAppBar(
             modifier = Modifier.width(600.dp).padding(8.dp).testTag(TestTags.TopAppBar.small),
             navigationIcon = {
                 NavigationIcon(
@@ -45,9 +38,9 @@ fun LazyGridScope.m3TopAppBars() {
     item {
 
         // Hacky scroll state to show how the toolbar will look if its scrolled state
-        val scrollState = TopAppBarScrollState(-1f, 0f, -2f)
+        val scrollState = TopAppBarState(-1f, 0f, -2f)
 
-        SmallTopAppBar(
+        CenterAlignedTopAppBar(
             modifier = Modifier.width(600.dp).padding(8.dp).testTag(TestTags.TopAppBar.smallScroll),
             navigationIcon = {
                 NavigationIcon(
@@ -62,7 +55,7 @@ fun LazyGridScope.m3TopAppBars() {
     item {
 
         // Hacky scroll state to show how the toolbar will look if its scrolled state
-        val scrollState = TopAppBarScrollState(-1f, 0f, -2f)
+        val scrollState = TopAppBarState(-1f, 0f, -2f)
 
         CenterAlignedTopAppBar(
             modifier = Modifier.width(600.dp).padding(8.dp).testTag(TestTags.TopAppBar.centerAlignedScroll),
