@@ -1,6 +1,7 @@
 plugins {
-    kotlin("jvm") version "1.8.0"
-    id("org.jetbrains.compose") version "1.4.0"
+    kotlin("jvm") version "2.2.0"
+    id("org.jetbrains.compose") version "1.8.0"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.2.10"
 }
 
 repositories {
@@ -16,7 +17,7 @@ dependencies {
     implementation("org.jetbrains.compose.material3:material3:1.2.1")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.compose.ui:ui-test-desktop:1.4.0")
+    testImplementation("org.jetbrains.compose.ui:ui-test-desktop:1.8.0")
     testImplementation("org.jetbrains.compose.ui:ui-test-junit4:1.8.2")
 }
 
