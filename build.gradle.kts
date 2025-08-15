@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
-    implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.4.0")
+    implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.7.3")
     implementation("org.jetbrains.compose.material3:material3:1.2.1")
 
     testImplementation("junit:junit:4.13.2")
