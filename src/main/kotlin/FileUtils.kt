@@ -35,57 +35,78 @@ internal fun FileChooserDialog(
 }
 
 internal fun saveColorsToFile(
-    currentColorPalette: ColorScheme,
+    lightColorPalette: ColorScheme,
+    darkColorPalette: ColorScheme,
     file: File,
     fileType: ColorFileType,
     onResult: (success: Boolean, message: String) -> Unit
 ) {
     when (fileType) {
-        Kotlin -> saveColorsToKotlinFile(file = file, currentColorPalette = currentColorPalette, onResult = onResult)
-        XML -> saveColorsToXMLFile(file = file, currentColorPalette = currentColorPalette, onResult = onResult)
+        Kotlin -> saveColorsToKotlinFile(file = file, lightColorPalette = lightColorPalette, darkColorPalette = darkColorPalette, onResult = onResult)
+        XML -> saveColorsToXMLFile(file = file, lightColorPalette = lightColorPalette, darkColorPalette = darkColorPalette, onResult = onResult)
     }
 }
 
 private fun saveColorsToXMLFile(
     file: File,
-    currentColorPalette: ColorScheme,
+    lightColorPalette: ColorScheme,
+    darkColorPalette: ColorScheme,
     onResult: (success: Boolean, message: String) -> Unit
 ) {
     tryWriteToFile(
         onResult = onResult
     ) {
         val path = file.path
-        val outputFile = Path(path, "colors.xml").createFile().toFile()
-        outputFile.apply {
 
-            getColorList(colorPalette = currentColorPalette).forEach { color ->
+        // Light colors
+        val lightOutputFile = Path(path, "light_colors.xml").createFile().toFile()
+        lightOutputFile.apply {
+            getColorList(colorPalette = lightColorPalette).forEach { color ->
                 appendText(getColorsXMLProperty(colorNameLowerCase = color.key, color = color.value))
             }
-
         }
-        onResult(true, "Saving colors worked")
+
+        // Dark colors
+        val darkOutputFile = Path(path, "dark_colors.xml").createFile().toFile()
+        darkOutputFile.apply {
+            getColorList(colorPalette = darkColorPalette).forEach { color ->
+                appendText(getColorsXMLProperty(colorNameLowerCase = color.key, color = color.value))
+            }
+        }
+
+        onResult(true, "Saved light_colors.xml and dark_colors.xml")
     }
 }
 
 
 private fun saveColorsToKotlinFile(
     file: File,
-    currentColorPalette: ColorScheme,
+    lightColorPalette: ColorScheme,
+    darkColorPalette: ColorScheme,
     onResult: (success: Boolean, message: String) -> Unit
 ) {
     tryWriteToFile(
         onResult = onResult
     ) {
         val path = file.path
-        val outputFile = Path(path, "colors.kt").createFile().toFile()
-        outputFile.apply {
 
-            getColorList(colorPalette = currentColorPalette).forEach { color ->
+        // Light colors
+        val lightOutputFile = Path(path, "LightColors.kt").createFile().toFile()
+        lightOutputFile.apply {
+            getColorList(colorPalette = lightColorPalette).forEach { color ->
                 appendText(getColorKotlinProperty(colorNameLowerCase = color.key, color = color.value))
             }
-
         }
-        onResult(true, "Saving colors worked")
+
+        // Dark colors
+        val darkOutputFile = Path(path, "DarkColors.kt").createFile().toFile()
+        darkOutputFile.apply {
+            getColorList(colorPalette = darkColorPalette).forEach { color ->
+                appendText(getColorKotlinProperty(colorNameLowerCase = color.key, color = color.value))
+            }
+        }
+
+        onResult(true, "Saved LightColors.kt and DarkColors.kt")
     }
 }
 private fun tryWriteToFile(

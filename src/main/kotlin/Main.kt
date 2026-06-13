@@ -136,7 +136,10 @@ internal fun Material3Playground(darkmode: Boolean) {
                     title = "Select directory to save file",
                     onResult = {
                         saveColorsToFile(
-                            currentColorPalette, file = it, onResult = { success, message ->
+                            lightColorPalette = lightColorScheme,
+                            darkColorPalette = darkColorScheme,
+                            file = it,
+                            onResult = { success, message ->
                                 // Implement success / failure screens for this when VM is implemented,
                                 // and we can easier manage states.
                                 fileSaverDialog = message
@@ -153,8 +156,8 @@ internal fun Material3Playground(darkmode: Boolean) {
 
             if (fileSaverDialog != null) {
                 val title = when (savableFileType) {
-                    Kotlin -> "Saving Colors to Colors.kt"
-                    XML -> "Saving Colors to Colors.xml"
+                    Kotlin -> "Saving Colors to LightColors.kt and DarkColors.kt"
+                    XML -> "Saving Colors to light_colors.xml and dark_colors.xml"
                 }
                 AlertDialog(
                     modifier = Modifier.defaultMinSize(minWidth = 400.dp, minHeight = 150.dp)
