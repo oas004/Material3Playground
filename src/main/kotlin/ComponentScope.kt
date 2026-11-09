@@ -635,6 +635,24 @@ fun ComponentScopePreviewOnly(
                     icon = { Icon(imageVector = Icons.Default.CheckBox, contentDescription = "Checkbox") },
                     label = { Text(text = "Check", style = MaterialTheme.typography.labelSmall) }
                 )
+                NavigationRailItem(
+                    selected = selectedPage == Page.Sliders,
+                    onClick = { selectedPage = Page.Sliders },
+                    icon = { Icon(imageVector = Icons.Default.Slideshow, contentDescription = "Sliders") },
+                    label = { Text(text = "Sliders", style = MaterialTheme.typography.labelSmall) }
+                )
+                NavigationRailItem(
+                    selected = selectedPage == Page.ProgressBars,
+                    onClick = { selectedPage = Page.ProgressBars },
+                    icon = { Icon(imageVector = Icons.Default.Download, contentDescription = "Progress Bars") },
+                    label = { Text(text = "Progress", style = MaterialTheme.typography.labelSmall) }
+                )
+                NavigationRailItem(
+                    selected = selectedPage == Page.Dividers,
+                    onClick = { selectedPage = Page.Dividers },
+                    icon = { Icon(imageVector = Icons.Default.Poll, contentDescription = "Dividers") },
+                    label = { Text(text = "Dividers", style = MaterialTheme.typography.labelSmall) }
+                )
             }
 
             // Components
