@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "2.4.21"
-    id("org.jetbrains.compose") version "1.8.2"
+    id("org.jetbrains.compose") version "1.12.2"
     id("org.jetbrains.kotlin.plugin.compose") version "2.4.21"
 }
 
@@ -13,12 +13,12 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
-    implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.7.3")
+    implementation(compose.materialIconsExtended)
     implementation("org.jetbrains.compose.material3:material3:1.2.1")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.compose.ui:ui-test-desktop:1.12.2")
-    testImplementation("org.jetbrains.compose.ui:ui-test-junit4:1.12.1")
+    testImplementation("org.jetbrains.compose.ui:ui-test-junit4:1.12.2")
 }
 
 java {
