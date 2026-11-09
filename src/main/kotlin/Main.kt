@@ -108,8 +108,8 @@ fun main() = application {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun Material3Playground(darkmode: Boolean, sideBySideMode: Boolean = false) {
-    var lightColorScheme by remember { mutableStateOf(lightColorScheme()) }
-    var darkColorScheme by remember { mutableStateOf(darkColorScheme()) }
+    var lightColorScheme by remember { mutableStateOf(ColorPreferences.loadLightColorScheme()) }
+    var darkColorScheme by remember { mutableStateOf(ColorPreferences.loadDarkColorScheme()) }
 
     var shouldShowFileChooser by remember { mutableStateOf(false) }
     var fileSaverDialog: String? by remember { mutableStateOf(null) }
@@ -125,8 +125,10 @@ internal fun Material3Playground(darkmode: Boolean, sideBySideMode: Boolean = fa
         )
         if (isDark) {
             darkColorScheme = updatedColorPalette
+            ColorPreferences.saveDarkColorScheme(updatedColorPalette)
         } else {
             lightColorScheme = updatedColorPalette
+            ColorPreferences.saveLightColorScheme(updatedColorPalette)
         }
     }
 
