@@ -94,8 +94,8 @@ fun main() = application {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun Material3Playground(darkmode: Boolean) {
-    var lightColorScheme by remember { mutableStateOf(lightColorScheme()) }
-    var darkColorScheme by remember { mutableStateOf(darkColorScheme()) }
+    var lightColorScheme by remember { mutableStateOf(ColorPreferences.loadLightColorScheme()) }
+    var darkColorScheme by remember { mutableStateOf(ColorPreferences.loadDarkColorScheme()) }
 
     MaterialTheme(
         colorScheme = if (darkmode) darkColorScheme else lightColorScheme
@@ -122,8 +122,10 @@ internal fun Material3Playground(darkmode: Boolean) {
 
                     if (darkmode) {
                         darkColorScheme = updatedColorPalette
+                        ColorPreferences.saveDarkColorScheme(updatedColorPalette)
                     } else {
                         lightColorScheme = updatedColorPalette
+                        ColorPreferences.saveLightColorScheme(updatedColorPalette)
                     }
                 },
                 onPrintColors = {
