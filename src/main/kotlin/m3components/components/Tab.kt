@@ -1,5 +1,6 @@
 package components
 
+import TestTags
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -8,13 +9,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 
 fun LazyGridScope.m3Tab() {
     item {
         var selectedIndex by remember { mutableStateOf(0) }
         val tabs = listOf("Accounts", "Cards", "Funds")
 
-        TabRow(selectedTabIndex = selectedIndex) {
+        TabRow(
+            selectedTabIndex = selectedIndex,
+            modifier = Modifier.testTag(TestTags.TabRow.regular)
+        ) {
             tabs.forEachIndexed { index, title ->
                 Tab(
                     text = { Text(title) },

@@ -1,5 +1,6 @@
 package components
 
+import TestTags
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.LazyGridScope
@@ -14,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 fun LazyGridScope.m3NavigationBars() {
@@ -22,7 +24,7 @@ fun LazyGridScope.m3NavigationBars() {
         val navbarItems = listOf("Home", "Payments", "Spending")
         var selectedItem by remember { mutableStateOf(0) }
 
-        NavigationBar(Modifier.width(600.dp).padding(8.dp)) {
+        NavigationBar(Modifier.width(600.dp).padding(8.dp).testTag(TestTags.NavigationBar.regular)) {
             navbarItems.forEachIndexed { index, title ->
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
@@ -38,7 +40,7 @@ fun LazyGridScope.m3NavigationBars() {
         val navbarItems = listOf("Home", "Payments", "Spending")
         var selectedItem by remember { mutableStateOf(0) }
 
-        NavigationBar(Modifier.width(600.dp).padding(8.dp)) {
+        NavigationBar(Modifier.width(600.dp).padding(8.dp).testTag(TestTags.NavigationBar.noLabel)) {
             navbarItems.forEachIndexed { index, title ->
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
