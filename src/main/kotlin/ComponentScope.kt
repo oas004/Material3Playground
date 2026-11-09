@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.SpatialAudio
 import androidx.compose.material.icons.filled.SwitchLeft
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.TouchApp
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -321,237 +323,250 @@ private fun ColorPickers(
     // Do not use MutableList since it will not be stable.
     var recentlyUsedColors: List<Color> by remember { mutableStateOf(listOf()) }
 
-    val colorPickedCallback: (colorName: String, pickedColor: Color) -> Unit =
+    // Use rememberUpdatedState to create a stable callback reference
+    val currentOnColorPicked by rememberUpdatedState(onColorPicked)
+    val colorPickedCallback: (colorName: String, pickedColor: Color) -> Unit = remember {
         { colorName, pickedColor ->
-            onColorPicked(colorName, pickedColor)
+            currentOnColorPicked(colorName, pickedColor)
             recentlyUsedColors = recentlyUsedColors.toMutableList().also {
                 if (!it.contains(pickedColor)) {
                     it.add(pickedColor)
                 }
             }
         }
+    }
+
+    // Capture color scheme once to avoid repeated reads during layout
+    val colorScheme = MaterialTheme.colorScheme
 
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Adaptive(minSize = 150.dp),
         contentPadding = PaddingValues(40.dp)
     ) {
+        colorPickerItems(colorScheme, colorPickedCallback, recentlyUsedColors)
+    }
+}
 
-        item {
-            ThemeColorPicker(
-                colorName = "primary",
-                currentColor = MaterialTheme.colorScheme.primary,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onPrimary",
-                currentColor = MaterialTheme.colorScheme.onPrimary,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "primaryContainer",
-                currentColor = MaterialTheme.colorScheme.primaryContainer,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onPrimaryContainer",
-                currentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "inversePrimary",
-                currentColor = MaterialTheme.colorScheme.inversePrimary,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "secondary",
-                currentColor = MaterialTheme.colorScheme.secondary,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onSecondary",
-                currentColor = MaterialTheme.colorScheme.onSecondary,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "secondaryContainer",
-                currentColor = MaterialTheme.colorScheme.secondaryContainer,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onSecondaryContainer",
-                currentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "tertiary",
-                currentColor = MaterialTheme.colorScheme.tertiary,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onTertiary",
-                currentColor = MaterialTheme.colorScheme.onTertiary,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "tertiaryContainer",
-                currentColor = MaterialTheme.colorScheme.tertiaryContainer,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onTertiaryContainer",
-                currentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "background",
-                currentColor = MaterialTheme.colorScheme.background,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onBackground",
-                currentColor = MaterialTheme.colorScheme.onBackground,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "surface",
-                currentColor = MaterialTheme.colorScheme.surface,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onSurface",
-                currentColor = MaterialTheme.colorScheme.onSurface,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "surfaceVariant",
-                currentColor = MaterialTheme.colorScheme.surfaceVariant,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onSurfaceVariant",
-                currentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "surfaceTint",
-                currentColor = MaterialTheme.colorScheme.surfaceTint,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "inverseSurface",
-                currentColor = MaterialTheme.colorScheme.inverseSurface,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "inverseOnSurface",
-                currentColor = MaterialTheme.colorScheme.inverseOnSurface,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "error",
-                currentColor = MaterialTheme.colorScheme.error,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onError",
-                currentColor = MaterialTheme.colorScheme.onError,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "errorContainer",
-                currentColor = MaterialTheme.colorScheme.errorContainer,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "onErrorContainer",
-                currentColor = MaterialTheme.colorScheme.onErrorContainer,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
-        item {
-            ThemeColorPicker(
-                colorName = "outline",
-                currentColor = MaterialTheme.colorScheme.outline,
-                onColorPicked = colorPickedCallback,
-                recentlyUsedColors = recentlyUsedColors,
-            )
-        }
+private fun androidx.compose.foundation.lazy.grid.LazyGridScope.colorPickerItems(
+    colorScheme: ColorScheme,
+    onColorPicked: (String, Color) -> Unit,
+    recentlyUsedColors: List<Color>,
+) {
+    item {
+        ThemeColorPicker(
+            colorName = "primary",
+            currentColor = colorScheme.primary,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onPrimary",
+            currentColor = colorScheme.onPrimary,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "primaryContainer",
+            currentColor = colorScheme.primaryContainer,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onPrimaryContainer",
+            currentColor = colorScheme.onPrimaryContainer,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "inversePrimary",
+            currentColor = colorScheme.inversePrimary,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "secondary",
+            currentColor = colorScheme.secondary,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onSecondary",
+            currentColor = colorScheme.onSecondary,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "secondaryContainer",
+            currentColor = colorScheme.secondaryContainer,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onSecondaryContainer",
+            currentColor = colorScheme.onSecondaryContainer,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "tertiary",
+            currentColor = colorScheme.tertiary,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onTertiary",
+            currentColor = colorScheme.onTertiary,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "tertiaryContainer",
+            currentColor = colorScheme.tertiaryContainer,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onTertiaryContainer",
+            currentColor = colorScheme.onTertiaryContainer,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "background",
+            currentColor = colorScheme.background,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onBackground",
+            currentColor = colorScheme.onBackground,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "surface",
+            currentColor = colorScheme.surface,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onSurface",
+            currentColor = colorScheme.onSurface,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "surfaceVariant",
+            currentColor = colorScheme.surfaceVariant,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onSurfaceVariant",
+            currentColor = colorScheme.onSurfaceVariant,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "surfaceTint",
+            currentColor = colorScheme.surfaceTint,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "inverseSurface",
+            currentColor = colorScheme.inverseSurface,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "inverseOnSurface",
+            currentColor = colorScheme.inverseOnSurface,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "error",
+            currentColor = colorScheme.error,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onError",
+            currentColor = colorScheme.onError,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "errorContainer",
+            currentColor = colorScheme.errorContainer,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "onErrorContainer",
+            currentColor = colorScheme.onErrorContainer,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
+    }
+    item {
+        ThemeColorPicker(
+            colorName = "outline",
+            currentColor = colorScheme.outline,
+            onColorPicked = onColorPicked,
+            recentlyUsedColors = recentlyUsedColors,
+        )
     }
 }
