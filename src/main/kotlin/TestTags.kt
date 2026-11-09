@@ -65,6 +65,15 @@ object TestTags {
         const val navigationIconCenterAlignedScroll = "NavigationIconCenterAlignedScrollTopAppBar"
     }
 
+    object NavigationBar {
+        const val regular = "NavigationBar"
+        const val noLabel = "NavigationBarNoLabel"
+    }
+
+    object TabRow {
+        const val regular = "TabRow"
+    }
+
     object NavRailButtons {
         const val buttons = "Buttons"
         const val appBars = "AppBars"
