@@ -34,6 +34,8 @@ compose.desktop {
             modules("java.sql")
             targetFormats(
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
+                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb,
+                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Rpm,
             )
             packageVersion = "1.6.0"
             packageName = "m3-components"
@@ -42,6 +44,10 @@ compose.desktop {
 
             macOS {
                iconFile.set(iconsRoot.resolve("icon.icns"))
+            }
+
+            linux {
+                iconFile.set(iconsRoot.resolve("icon.png"))
             }
         }
     }
