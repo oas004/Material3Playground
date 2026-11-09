@@ -2,6 +2,7 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
+import java.util.prefs.BackingStoreException
 import java.util.prefs.Preferences
 
 /**
@@ -9,7 +10,11 @@ import java.util.prefs.Preferences
  * Colors are stored in the user's preferences and automatically loaded on app startup.
  */
 object ColorPreferences {
-    private val prefs: Preferences = Preferences.userNodeForPackage(ColorPreferences::class.java)
+    private val prefs: Preferences? = try {
+        Preferences.userNodeForPackage(ColorPreferences::class.java)
+    } catch (e: SecurityException) {
+        null
+    }
 
     private const val LIGHT_PREFIX = "light_"
     private const val DARK_PREFIX = "dark_"
@@ -61,21 +66,39 @@ object ColorPreferences {
     }
 
     private fun saveColorScheme(colorScheme: ColorScheme, prefix: String) {
-        colorNames.forEach { colorName ->
-            val color = getColorFromScheme(colorScheme, colorName)
-            prefs.putLong("$prefix$colorName", color.value.toLong())
+        val preferences = prefs ?: return
+        try {
+            colorNames.forEach { colorName ->
+                val color = getColorFromScheme(colorScheme, colorName)
+                preferences.putLong("$prefix$colorName", color.value.toLong())
+            }
+            preferences.flush()
+        } catch (e: BackingStoreException) {
+            // Storage operation failed, silently ignore - colors won't persist
+        } catch (e: IllegalStateException) {
+            // Node has been removed, silently ignore
         }
-        prefs.flush()
     }
 
     private fun loadColorScheme(prefix: String, defaultScheme: ColorScheme): ColorScheme {
+        val preferences = prefs ?: return defaultScheme
         var scheme = defaultScheme
-        colorNames.forEach { colorName ->
-            val storedValue = prefs.getLong("$prefix$colorName", Long.MIN_VALUE)
-            if (storedValue != Long.MIN_VALUE) {
-                val color = Color(storedValue.toULong())
-                scheme = updateColorScheme(scheme, colorName, color)
+        try {
+            colorNames.forEach { colorName ->
+                val storedValue = preferences.getLong("$prefix$colorName", Long.MIN_VALUE)
+                if (storedValue != Long.MIN_VALUE) {
+                    val color = try {
+                        Color(storedValue.toULong())
+                    } catch (e: IllegalArgumentException) {
+                        // Invalid color value stored, skip this color
+                        return@forEach
+                    }
+                    scheme = updateColorScheme(scheme, colorName, color)
+                }
             }
+        } catch (e: IllegalStateException) {
+            // Node has been removed, return default scheme
+            return defaultScheme
         }
         return scheme
     }
