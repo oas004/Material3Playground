@@ -1,9 +1,12 @@
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -30,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -552,6 +556,118 @@ private fun ColorPickers(
                 onColorPicked = colorPickedCallback,
                 recentlyUsedColors = recentlyUsedColors,
             )
+        }
+    }
+}
+
+@Composable
+fun ComponentScopePreviewOnly(
+    modifier: Modifier = Modifier,
+    label: String,
+) {
+    var selectedPage by remember { mutableStateOf(Page.Buttons) }
+
+    Column(
+        modifier = modifier
+            .background(color = MaterialTheme.colorScheme.background)
+    ) {
+        // Label header
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = MaterialTheme.colorScheme.primaryContainer)
+                .padding(8.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
+
+        Row(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            // Simplified navigation rail for side-by-side mode
+            NavigationRail(
+                modifier = Modifier.fillMaxHeight().padding(4.dp),
+            ) {
+                NavigationRailItem(
+                    selected = selectedPage == Page.Buttons,
+                    onClick = { selectedPage = Page.Buttons },
+                    icon = { Icon(imageVector = Icons.Default.TouchApp, contentDescription = "Buttons") },
+                    label = { Text(text = "Buttons", style = MaterialTheme.typography.labelSmall) }
+                )
+                NavigationRailItem(
+                    selected = selectedPage == Page.AppBars,
+                    onClick = { selectedPage = Page.AppBars },
+                    icon = { Icon(imageVector = Icons.Default.AppShortcut, contentDescription = "App Bars") },
+                    label = { Text(text = "Bars", style = MaterialTheme.typography.labelSmall) }
+                )
+                NavigationRailItem(
+                    selected = selectedPage == Page.Cards,
+                    onClick = { selectedPage = Page.Cards },
+                    icon = { Icon(imageVector = Icons.Default.CreditCard, contentDescription = "Cards") },
+                    label = { Text(text = "Cards", style = MaterialTheme.typography.labelSmall) }
+                )
+                NavigationRailItem(
+                    selected = selectedPage == Page.TextFields,
+                    onClick = { selectedPage = Page.TextFields },
+                    icon = { Icon(imageVector = Icons.Default.TextFields, contentDescription = "TextFields") },
+                    label = { Text(text = "Fields", style = MaterialTheme.typography.labelSmall) }
+                )
+                NavigationRailItem(
+                    selected = selectedPage == Page.Chips,
+                    onClick = { selectedPage = Page.Chips },
+                    icon = { Icon(imageVector = Icons.Default.SpatialAudio, contentDescription = "Chips") },
+                    label = { Text(text = "Chips", style = MaterialTheme.typography.labelSmall) }
+                )
+                NavigationRailItem(
+                    selected = selectedPage == Page.Switch,
+                    onClick = { selectedPage = Page.Switch },
+                    icon = { Icon(imageVector = Icons.Default.SwitchLeft, contentDescription = "Switch") },
+                    label = { Text(text = "Switch", style = MaterialTheme.typography.labelSmall) }
+                )
+                NavigationRailItem(
+                    selected = selectedPage == Page.Checkbox,
+                    onClick = { selectedPage = Page.Checkbox },
+                    icon = { Icon(imageVector = Icons.Default.CheckBox, contentDescription = "Checkbox") },
+                    label = { Text(text = "Check", style = MaterialTheme.typography.labelSmall) }
+                )
+            }
+
+            // Components
+            M3ComponentsPreview(
+                modifier = Modifier.fillMaxSize().padding(8.dp),
+                page = selectedPage,
+            )
+        }
+    }
+}
+
+@Composable
+private fun M3ComponentsPreview(modifier: Modifier, page: Page) {
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Adaptive(200.dp),
+        contentPadding = PaddingValues(8.dp)
+    ) {
+        when (page) {
+            Page.Buttons -> m3Buttons()
+            Page.AppBars -> {
+                m3TopAppBars()
+                m3NavigationBars()
+                m3Tab()
+            }
+            Page.Cards -> m3Cards()
+            Page.TextFields -> m3TextFields()
+            Page.Chips -> m3Chips()
+            Page.Switch -> m3Switch()
+            Page.Checkbox -> m3Checkbox()
+            Page.Sliders -> m3Slider()
+            Page.ProgressBars -> m3ProgressBar()
+            Page.Dividers -> m3Divider()
         }
     }
 }
